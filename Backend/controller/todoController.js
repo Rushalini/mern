@@ -1,45 +1,59 @@
 let todos=[];
 let id=1;
-exports.getTodo = (req,res)=>{
-    {/*res.send("Get working")*/}
-    res.status(200).json(todos)
-};
+const Todo = require("../models/todo");
+exports.getTodo =async(req,res)=>{
+   try{
+    let todos =await Todo.find();
+    res.status(200).json(todos);
+   } catch(err){
+    res.status(500).send(err)
+   }
+}
 
-exports.createTodo=(req,res)=>{
-    {/*res.send("Post working")*/}
+exports.createTodo=async(req,res)=>{
+  try{
     const {task}=req.body;
-    const newTodo = {
-        id:id++,
+    if(task===undefined)
+        return res.status(401).json({message:"Task Not found"})
+   const todos= await Todo.create({
         task,
         Completed:false
+    })
+    res.status(201).json(todos);
+    }catch(err){
+        res.status(500).send(err);
     }
-    todos.push(newTodo)
-    res.json(newTodo)
 };
 
-exports.updateTodo=(req,res)=>{
-   {/* res.send("Put working")*/}
-   const todo=todos.find((t)=>t.id===parseInt(req.params.id));
-  // console.log(todo)
+
+exports.updateTodo=async(req,res)=>{
+   try{
+    const todo= await Todo.findById(req.params.id);
   if(!todo){
-    res.json({message:"Todo not found"})
+    res.status(404).json({message:"Todo not found"})
   }
   todo.task=req.body.task || todo.task;
-  todo.Completed = req.body.Completed===undefined?todo.Completed:req.body.Completed
-  res.json(todo)
+  todo.completed = req.body.completed===undefined?todo.Completed:req.body.completed
+  await todo.save();
+  res.status(200).json(todo)
+   }catch(err){
+    res.status(500).send(err);
+   }
 };
 
-exports.deleteTodo=(req,res)=>{
-    //res.send("Delete working")
-   const index = todos.findIndex((t)=>t.id===parseInt(req.params.id))
-   if(index===-1)
-        return res.status(404).json({message:"Task not found"})
-    todos=todos.filter((_,i)=>i!==index);
-    res.status(200).json({message:"Task Deleted Sucessfully"})
+exports.deleteTodo = async (req, res) => {
+    try {
+    // const todo = await Todo.findById(req.params.id);
+    //     if(!todo){
+    //         res.status(401).json({message:"Todo not found"});
+    //     }
+    // todo.task= req.body.task || todo.task;
+    // todo.completed= req.body.completed===undefined ? todo.completed : req.body.completed;
+    // await todo.save();
+    // res.status(200).json(todo);
+    const todo = await Todo.findByIdAndDelete(req.params.id,req.body,{new:true});
+    res.status(200).json(todo);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 };
-
-
-//api/todo/  ->in the postman
-//api/todo/create
-//api/todo/update
-//api/todo/delete/1

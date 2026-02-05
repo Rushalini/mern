@@ -11,7 +11,7 @@ connectDB();
 app.use(express.json())
 app.use("/api/user",userRoute);
 app.use("/api/todo",todoRoute);
-const PORT=process.env.PORT || 3000;
+const PORT=process.env.PORT;
 // app.get("/",(req,res)=>{
 //     res.send("Get Route is Working")
 // })

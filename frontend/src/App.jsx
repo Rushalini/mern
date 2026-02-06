@@ -15,33 +15,33 @@ import UseRef from "./Hooks/UseRef"
 import UseReducer from "./Hooks/UseReducer"
 import UseMemo from "./Hooks/UseMemo"
 import UseCallback from "./Hooks/UseCallback"
+import Todo from "./component/Todo"
 
 //import Counter from "./component/Counter"
 import {Route ,Routes} from "react-router-dom"
-
 const App = ()=>{
 const element = <h1>Hello</h1>
  return(
     <>
     <Navbar/>
     <Routes>
-      <Route path='/' element={<Home name="Likki"/>}/>
-      <Route path='/about' element={<About name="Likki" age={20} dept="DS"/>}></Route>
+      <Route path='/' element={<Home name="pavi"/>}/>
+      <Route path='/about' element={<About name="pavi" age={19} dept="DS"/>}></Route>
       <Route path='/contact' element={<Contact/>}></Route>
       <Route path='/service' element={<Service/>}></Route>
       <Route path='/login' element={<Login/>}></Route>
       <Route path='/Signup' element={<Signup/>}></Route>
-
+      <Route path='/Todo' element={<Todo/>}></Route>
       {/* Hooks */}
 
       <Route path='/hook'element={<Hook/>}>
         <Route path='useState' element={<UseState/>}></Route>
         <Route path='useEffect' element={<UseEffect/>}></Route>
         <Route path='useEffectApi' element={<UseEffectApi/>}></Route>
-        <Route path ='useRef' element={<UseRef/>}/>
-        <Route path ='useReducer' element={<UseReducer/>}/>
-        <Route path ='useMemo' element={<UseMemo/>}/>
-        <Route path ='useCallback' element={<UseCallback/>}/>
+        <Route path ='UseRef' element={<UseRef/>}/>
+        <Route path ='UseReducer' element={<UseReducer/>}/>
+        <Route path ='UseMemo' element={<UseMemo/>}/>
+        <Route path ='UseCallback' element={<UseCallback/>}/>
       </Route>  
 
     </Routes>
@@ -49,7 +49,7 @@ const element = <h1>Hello</h1>
     <h2>World</h2>
     {element}
   
-    <Home name="Likki"/>
+    <Home name="pavi"/>
     <Service/>
     <Contact/>
     <About/>
